@@ -1,13 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const {
+import express from 'express';
+import {
   getHistorySuggestions,
   getSeasonalSuggestions,
   getSubstituteSuggestion,
-} = require('../controllers/suggestionController');
+} from '../controllers/suggestionController.js';
+
+const router = express.Router();
 
 router.get('/history', getHistorySuggestions);
 router.get('/seasonal', getSeasonalSuggestions);
 router.get('/substitute/:itemName', getSubstituteSuggestion);
 
-module.exports = router;
+export default router;

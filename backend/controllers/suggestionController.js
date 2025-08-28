@@ -1,23 +1,20 @@
-const Item = require('../models/itemModel');
-
+import Item from '../models/itemModel.js';
 
 const seasonalItems = [
-    { name: 'Mangoes', quantity: 1, category: 'Produce' },
-    { name: 'Watermelon', quantity: 1, category: 'Produce' },
-    { name: 'Corn on the cob', quantity: 4, category: 'Produce' },
+  { name: 'Mangoes', quantity: 1, category: 'Produce' },
+  { name: 'Watermelon', quantity: 1, category: 'Produce' },
+  { name: 'Corn on the cob', quantity: 4, category: 'Produce' },
 ];
 
-
 const substituteMap = {
-    'milk': { name: 'Almond Milk', quantity: 1, category: 'Dairy Alternatives' },
-    'soda': { name: 'Sparkling Water', quantity: 1, category: 'Beverages' },
-    'white bread': { name: 'Whole Wheat Bread', quantity: 1, category: 'Bakery & Grains' },
+  milk: { name: 'Almond Milk', quantity: 1, category: 'Dairy Alternatives' },
+  soda: { name: 'Sparkling Water', quantity: 1, category: 'Beverages' },
+  'white bread': { name: 'Whole Wheat Bread', quantity: 1, category: 'Bakery & Grains' },
 };
 
 
 const getHistorySuggestions = async (req, res) => {
   try {
-    
     const suggestions = await Item.aggregate([
       { $group: { _id: '$name', count: { $sum: 1 } } },
       { $sort: { count: -1 } },
@@ -32,24 +29,19 @@ const getHistorySuggestions = async (req, res) => {
 
 
 const getSeasonalSuggestions = async (req, res) => {
-  // Returns a static list of seasonal items.
   res.status(200).json(seasonalItems);
 };
 
+
 const getSubstituteSuggestion = async (req, res) => {
-    const itemName = req.params.itemName.toLowerCase();
-    const substitute = substituteMap[itemName];
+  const itemName = req.params.itemName.toLowerCase();
+  const substitute = substituteMap[itemName];
 
-    if (substitute) {
-        res.status(200).json(substitute);
-    } else {
-        res.status(404).json({ message: 'No substitute suggestion found.' });
-    }
+  if (substitute) {
+    res.status(200).json(substitute);
+  } else {
+    res.status(404).json({ message: 'No substitute suggestion found.' });
+  }
 };
 
-
-module.exports = {
-  getHistorySuggestions,
-  getSeasonalSuggestions,
-  getSubstituteSuggestion,
-};
+export { getHistorySuggestions, getSeasonalSuggestions, getSubstituteSuggestion };

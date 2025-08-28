@@ -1,16 +1,20 @@
-const express = require('express');
-const router = express.Router();
-const {
+import express from 'express';
+import {
   getItems,
   addItem,
   deleteItem,
   searchItems,
-} = require('../controllers/itemController');
+} from '../controllers/itemController.js';
 
+const router = express.Router();
 
 router.get('/search', searchItems);
 
-router.route('/').get(getItems).post(addItem);
-router.route('/:id').delete(deleteItem);
+router.route('/')
+  .get(getItems)
+  .post(addItem);
 
-module.exports = router;
+router.route('/:id')
+  .delete(deleteItem);
+
+export default router;

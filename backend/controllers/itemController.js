@@ -1,4 +1,4 @@
-const Item = require('../models/itemModel');
+import Item from '../models/itemModel.js';
 
 // A simple function to auto-categorize items based on keywords
 const categorizeItem = (itemName) => {
@@ -54,7 +54,7 @@ const deleteItem = async (req, res) => {
       return res.status(404).json({ message: 'Item not found' });
     }
 
-    await item.remove();
+    await item.deleteOne(); // `remove()` is deprecated in Mongoose 7
     res.status(200).json({ id: req.params.id, message: 'Item removed' });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
@@ -73,9 +73,4 @@ const searchItems = async (req, res) => {
   }
 };
 
-module.exports = {
-  getItems,
-  addItem,
-  deleteItem,
-  searchItems,
-};
+export { getItems, addItem, deleteItem, searchItems };
