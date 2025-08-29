@@ -15,7 +15,6 @@ const categorizeItem = (itemName) => {
 // @route   GET /api/items
 const getItems = async (req, res) => {
   try {
-    // For this MVP, we only get items that are not yet purchased
     const items = await Item.find({ isPurchased: false }).sort({ createdAt: -1 });
     res.status(200).json(items);
   } catch (error) {
@@ -35,7 +34,7 @@ const addItem = async (req, res) => {
   try {
     const newItem = await Item.create({
       name,
-      quantity: quantity || 1,
+      quantity: quantity || '1', // ensure stored as string
       category: categorizeItem(name),
     });
     res.status(201).json(newItem);
@@ -54,7 +53,7 @@ const deleteItem = async (req, res) => {
       return res.status(404).json({ message: 'Item not found' });
     }
 
-    await item.deleteOne(); // `remove()` is deprecated in Mongoose 7
+    await item.deleteOne();
     res.status(200).json({ id: req.params.id, message: 'Item removed' });
   } catch (error) {
     res.status(500).json({ message: 'Server Error' });
@@ -65,7 +64,7 @@ const deleteItem = async (req, res) => {
 // @route   GET /api/items/search
 const searchItems = async (req, res) => {
   try {
-    const query = { name: { $regex: req.query.q, $options: 'i' } }; // Case-insensitive search
+    const query = { name: { $regex: req.query.q, $options: 'i' } };
     const items = await Item.find(query);
     res.status(200).json(items);
   } catch (error) {

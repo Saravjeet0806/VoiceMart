@@ -8,9 +8,9 @@ const itemSchema = new mongoose.Schema(
       trim: true,
     },
     quantity: {
-      type: Number,
+      type: String, // changed from Number → String
       required: true,
-      default: 1,
+      default: '1', // default value is now a string
     },
     category: {
       type: String,
@@ -22,7 +22,7 @@ const itemSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
