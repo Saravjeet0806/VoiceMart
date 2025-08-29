@@ -1,0 +1,33 @@
+{
+  "fruits": [
+    { "name": "apple", "price": 120, "unit": "kg" },
+    { "name": "apples", "price": 120, "unit": "kg" },
+    { "name": "banana", "price": 50, "unit": "dozen" },
+    { "name": "bananas", "price": 50, "unit": "dozen" },
+    { "name": "mango", "price": 150, "unit": "kg" },
+    { "name": "mangoes", "price": 150, "unit": "kg" },
+    { "name": "orange", "price": 80, "unit": "kg" },
+    { "name": "oranges", "price": 80, "unit": "kg" },
+    { "name": "watermelon", "price": 40, "unit": "kg" }
+  ],
+  "vegetables": [
+    { "name": "potato", "price": 30, "unit": "kg" },
+    { "name": "potatoes", "price": 30, "unit": "kg" },
+    { "name": "onion", "price": 40, "unit": "kg" },
+    { "name": "onions", "price": 40, "unit": "kg" },
+    { "name": "tomato", "price": 50, "unit": "kg" },
+    { "name": "tomatoes", "price": 50, "unit": "kg" },
+    { "name": "lettuce", "price": 60, "unit": "piece" },
+    { "name": "carrot", "price": 45, "unit": "kg" },
+    { "name": "carrots", "price": 45, "unit": "kg" }
+  ],
+  "dairy": [
+    { "name": "milk", "price": 60, "unit": "liter" },
+    { "name": "cheese", "price": 250, "unit": "kg" },
+    { "name": "yogurt", "price": 80, "unit": "kg" }
+  ],
+  "bakery": [
+    { "name": "bread", "price": 40, "unit": "loaf" },
+    { "name": "cereal", "price": 200, "unit": "pack" }
+  ]
+}
