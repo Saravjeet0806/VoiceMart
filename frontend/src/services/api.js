@@ -1,46 +1,60 @@
+import axios from 'axios';
+
 const API_URL = 'http://localhost:5001/api';
 
 // Fetches the current shopping list items
 export const getItems = async () => {
-  const response = await fetch(`${API_URL}/items`);
-  if (!response.ok) throw new Error('Failed to fetch shopping list.');
-  return await response.json();
+  try {
+    const response = await axios.get(`${API_URL}/items`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch shopping list.');
+  }
 };
 
 // Fetches both history and seasonal suggestions
 export const getSuggestions = async () => {
-  const [historyRes, seasonalRes] = await Promise.all([
-    fetch(`${API_URL}/suggestions/history`),
-    fetch(`${API_URL}/suggestions/seasonal`),
-  ]);
+  try {
+    const [historyRes, seasonalRes] = await Promise.all([
+      axios.get(`${API_URL}/suggestions/history`),
+      axios.get(`${API_URL}/suggestions/seasonal`)
+    ]);
 
-  if (!historyRes.ok || !seasonalRes.ok) {
+    return [
+      ...historyRes.data.map((s) => ({ ...s, type: 'History' })),
+      ...seasonalRes.data.map((s) => ({ ...s, type: 'Seasonal' })),
+    ];
+  } catch (error) {
     throw new Error('Failed to fetch suggestions.');
   }
-
-  const historyData = await historyRes.json();
-  const seasonalData = await seasonalRes.json();
-
-  return [
-    ...historyData.map((s) => ({ ...s, type: 'History' })),
-    ...seasonalData.map((s) => ({ ...s, type: 'Seasonal' })),
-  ];
 };
 
 // Adds a new item to the list
-export const addItem = async (name, quantity) => {
-  const response = await fetch(`${API_URL}/items`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, quantity }),
-  });
-  if (!response.ok) throw new Error('Failed to add item.');
-  return await response.json();
+export const addItem = async (itemData) => {
+  try {
+    const response = await axios.post(`${API_URL}/items`, itemData);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to add item.');
+  }
+};
+
+// Fetches the product price list
+export const getPrices = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/prices`);
+    return response.data;
+  } catch (error) {
+    throw new Error('Failed to fetch prices.');
+  }
 };
 
 // Deletes an item from the list
 export const deleteItem = async (id) => {
-  const response = await fetch(`${API_URL}/items/${id}`, { method: 'DELETE' });
-  if (!response.ok) throw new Error('Failed to delete item.');
-  return id; // Return the id on success for filtering
+  try {
+    await axios.delete(`${API_URL}/items/${id}`);
+    return id; // Return the id on success for filtering
+  } catch (error) {
+    throw new Error('Failed to delete item.');
+  }
 };
