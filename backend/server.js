@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 
 import itemRoutes from './routes/itemRoutes.js';
 import suggestionRoutes from './routes/suggestionRoutes.js';
+import priceRoutes from './routes/priceRoutes.js';
 
 dotenv.config();
 
@@ -20,5 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/items', itemRoutes);
 app.use('/api/suggestions', suggestionRoutes);
+app.use('/api/prices', priceRoutes);
+
 
 app.listen(port, () => console.log(`🚀 Server started on port ${port}`));
