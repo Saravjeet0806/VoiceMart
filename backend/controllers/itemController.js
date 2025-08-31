@@ -25,7 +25,8 @@ const getItems = async (req, res) => {
 // @desc    Add a new item to the shopping list
 // @route   POST /api/items
 const addItem = async (req, res) => {
-  const { name, quantity } = req.body;
+  // --- ADD price and totalPrice ---
+  const { name, quantity, price, totalPrice } = req.body;
 
   if (!name) {
     return res.status(400).json({ message: 'Please provide an item name' });
@@ -34,7 +35,10 @@ const addItem = async (req, res) => {
   try {
     const newItem = await Item.create({
       name,
-      quantity: quantity || '1', // ensure stored as string
+      quantity: quantity || '1',
+      // --- ADD THESE FIELDS ---
+      price: price || 0,
+      totalPrice: totalPrice || 0,
       category: categorizeItem(name),
     });
     res.status(201).json(newItem);

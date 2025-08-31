@@ -12,6 +12,16 @@ const itemSchema = new mongoose.Schema(
       required: true,
       default: '1', // default value is now a string
     },
+     price: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    totalPrice: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
     category: {
       type: String,
       default: 'Uncategorized',
