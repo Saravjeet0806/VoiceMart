@@ -4,6 +4,7 @@ import Suggestions from './components/Suggestions';
 import VoiceControl from './components/VoiceControl';
 import './App.css';
 
+// Import our clean functions
 import * as api from './services/api';
 import { useVoiceCommands } from './hooks/useVoiceCommands';
 
@@ -11,16 +12,20 @@ const App = () => {
   const [items, setItems] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [error, setError] = useState('');
+  const [priceList, setPriceList] = useState([]);
 
+  // --- Data Fetching ---
   useEffect(() => {
     const loadData = async () => {
       try {
-        const [fetchedItems, fetchedSuggestions] = await Promise.all([
+        const [fetchedItems, fetchedSuggestions, fetchedPrices] = await Promise.all([
           api.getItems(),
           api.getSuggestions(),
+          api.getPrices(),
         ]);
         setItems(fetchedItems);
         setSuggestions(fetchedSuggestions);
+        setPriceList(fetchedPrices);
       } catch (err) {
         setError(err.message);
       }
@@ -28,16 +33,16 @@ const App = () => {
     loadData();
   }, []);
 
-  const handleAddItem = useCallback(async (name, quantity) => {
+  // --- API Handlers ---
+  const handleAddItem = useCallback(async (itemData) => {
     try {
-      const newItem = await api.addItem(name, quantity);
+      const newItem = await api.addItem(itemData);
       setItems((prev) => [newItem, ...prev]);
-      // Optionally refresh suggestions after adding
-      setSuggestions(await api.getSuggestions());
     } catch (err) {
       setError(err.message);
     }
   }, []);
+
 
   const handleDeleteItem = useCallback(async (id) => {
     try {
@@ -47,8 +52,17 @@ const App = () => {
       setError(err.message);
     }
   }, []);
+  // --- END OF FIX ---
 
-  const { processCommand } = useVoiceCommands(items, handleAddItem, handleDeleteItem, setError);
+
+  // --- Voice command logic ---
+  const { processCommand } = useVoiceCommands(
+    items,
+    handleAddItem,
+    handleDeleteItem, // Now this function exists
+    setError,
+    priceList
+  );
 
   return (
     <div className="bg-gray-100 min-h-screen font-sans">
@@ -63,6 +77,7 @@ const App = () => {
           <ShoppingList items={items} onDelete={handleDeleteItem} />
         </div>
         <div>
+  
           <Suggestions suggestions={suggestions} onAdd={handleAddItem} />
         </div>
       </main>
