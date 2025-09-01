@@ -74,7 +74,7 @@ const VoiceControl = ({ processCommand }) => {
         </p>
       <button
         onClick={handleMicClick}
-        className={`relative rounded-full p-4 transition-colors duration-300 focus:outline-none ${
+        className={`mt-10 sm:mt-0 relative rounded-full p-4 transition-colors duration-300 focus:outline-none ${
           isListening ? 'bg-red-500 text-white' : 'bg-blue-600 text-white'
         }`}
       >
