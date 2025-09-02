@@ -38,7 +38,7 @@ const Menu = ({ priceList, onAdd, onError }) => {
   const filteredItems = useMemo(() => {
     return priceList.filter(item => {
       // Category filter
-      const categoryMatch = selectedCategory === 'all' || 
+      const categoryMatch = selectedCategory === 'all' ||
         (selectedCategory === 'fruits' && ['apple', 'apples', 'banana', 'bananas', 'mango', 'mangoes', 'orange', 'oranges', 'watermelon'].includes(item.name)) ||
         (selectedCategory === 'vegetables' && ['potato', 'potatoes', 'onion', 'onions', 'tomato', 'tomatoes', 'lettuce', 'carrot', 'carrots'].includes(item.name)) ||
         (selectedCategory === 'dairy' && ['milk', 'cheese', 'yogurt'].includes(item.name)) ||
@@ -66,15 +66,15 @@ const Menu = ({ priceList, onAdd, onError }) => {
       const quantity = quantities[item.name] || 1;
       const itemData = {
         name: item.name,
-        quantity: `${quantity} ${item.unit}${quantity > 1 ? 's' : ''}`, 
+        quantity: `${quantity} ${item.unit}${quantity > 1 ? 's' : ''}`,
         unit: item.unit,
         price: item.price,
         totalPrice: item.price * quantity,
-        unitPrice: item.price, 
-        numericQuantity: quantity 
+        unitPrice: item.price,
+        numericQuantity: quantity
       };
       await onAdd(itemData);
-      
+
       // Reset quantity after adding
       setQuantities(prev => ({
         ...prev,
@@ -123,11 +123,10 @@ const Menu = ({ priceList, onAdd, onError }) => {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                selectedCategory === category
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${selectedCategory === category
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
+                }`}
             >
               {category.charAt(0).toUpperCase() + category.slice(1)}
             </button>
@@ -202,8 +201,22 @@ const Menu = ({ priceList, onAdd, onError }) => {
                     min="1"
                     max="50"
                     step="1"
-                    value={quantities[item.name] || 1}
-                    onChange={(e) => handleQuantityChange(item.name, parseInt(e.target.value) || 1)}
+                    value={quantities[item.name] ?? "1"}  // ✅ allow empty value
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      if (val === "") {
+                        // ✅ allow clearing the field
+                        handleQuantityChange(item.name, "");
+                      } else {
+                        handleQuantityChange(item.name, parseInt(val));
+                      }
+                    }}
+                    onBlur={(e) => {
+                      if (e.target.value === "" || parseInt(e.target.value) < 1) {
+                        // ✅ reset to 1 if user leaves empty or < 1
+                        handleQuantityChange(item.name, 1);
+                      }
+                    }}
                     className="w-16 px-2 py-1 border border-gray-300 rounded text-center text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     title={`Quantity in ${item.unit}s`}
                   />
