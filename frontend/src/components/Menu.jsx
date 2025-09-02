@@ -94,10 +94,10 @@ const Menu = ({ priceList, onAdd, onError }) => {
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">🛍️ Menu</h2>
+        <h2 className="text-2xl font-bold text-gray-800">Menu</h2>
         <button
           onClick={resetFilters}
-          className="text-sm text-blue-600 hover:text-blue-800 underline">
+          className="text-sm text-black hover:text-blue-400 ">
           Reset Filters
         </button>
       </div>
