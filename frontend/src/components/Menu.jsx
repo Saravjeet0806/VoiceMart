@@ -240,7 +240,7 @@ const Menu = ({ priceList, onAdd, onError }) => {
       </div>
 
       {/* Quick Add Buttons for Popular Items */}
-      <div className="mt-6 pt-4 border-t border-gray-200">
+      <div className="mt-6 pt-4 border-t border-gray-200 sm:mb-30 mb-10">
         <h3 className="text-sm font-medium text-gray-700 mb-3">Quick Add Popular Items</h3>
         <div className="flex flex-wrap gap-2">
           {['milk', 'bread', 'apple', 'potato', 'onion'].map(itemName => {
