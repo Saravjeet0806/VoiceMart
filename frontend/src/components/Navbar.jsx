@@ -28,7 +28,7 @@ const Navbar = ({ activeTab, setActiveTab, itemCount }) => {
       <div className="container mx-auto p-4">
         <div className="flex items-center justify-between">
           {/* Logo / Title */}
-          <h1 className="text-2xl font-bold">🛒 Voice Shopping Assistant</h1>
+          <h1 className="text-2xl font-bold">🛒 VoiceMart </h1>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex gap-2">
