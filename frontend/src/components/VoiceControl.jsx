@@ -70,11 +70,11 @@ const VoiceControl = ({ processCommand }) => {
   return (
     <div className="flex flex-col items-center justify-center">
         <p className="text-gray-500 h-6 mb-2 text-center italic">
-            {isListening ? transcript : 'Press the mic and say "Add 2 kg apples" or "Remove apples"'}
+            {isListening ? transcript : 'Hold mic and Say "Add 2 kg apples" or "Remove apples"'}
         </p>
       <button
         onClick={handleMicClick}
-        className={`mt-10 sm:mt-0 relative rounded-full p-4 transition-colors duration-300 focus:outline-none ${
+        className={`mt-5 sm:mt-0 relative rounded-full p-2 transition-colors duration-300 focus:outline-none ${
           isListening ? 'bg-red-500 text-white' : 'bg-blue-600 text-white'
         }`}
       >
