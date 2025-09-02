@@ -24,7 +24,7 @@ A modern, feature-rich shopping list application built with React and Node.js th
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/smart-shopping-list.git
+   git clone [https://github.com/Saravjeet0806/VoiceMart.git]
    cd smart-shopping-list
    ```
 
