@@ -38,7 +38,7 @@ const ShoppingList = ({ items, onDelete }) => {
               </li>
             ))}
           </ul>
-          <div className="mt-6 pt-4 border-t-2 border-dashed">
+          <div className="mt-6 pt-4 border-t-2 border-dashed mb-20">
             <div className="flex justify-between items-center">
               <span className="text-xl font-bold text-gray-800">Grand Total</span>
               <span className="text-2xl font-bold text-blue-600">₹{grandTotal.toFixed(2)}</span>
